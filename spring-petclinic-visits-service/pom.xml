@@ -12,13 +12,19 @@
         <groupId>org.springframework.samples</groupId>
         <artifactId>spring-petclinic-microservices</artifactId>
         <version>2.6.3</version>
+        <relativePath>../spring-petclinic-parent/pom.xml</relativePath>
     </parent>
 
     <properties>
         <docker.exposed.port>8081</docker.exposed.port>
         <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
     </properties>
-
+    <licenses>
+        <license>
+        <name>Apache License, Version 2.0</name>
+        <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 	<dependencies>
         <!-- Spring Boot -->
         <dependency>
@@ -40,22 +46,22 @@
         </dependency>
 
         <!-- Spring Cloud -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
+        </dependency> -->
+        <!-- <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-        </dependency>
+        </dependency> -->
 
         <!-- Third parties -->
         <dependency>
@@ -72,11 +78,11 @@
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
         </dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency> -->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
@@ -97,20 +103,38 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+      <!-- live reload -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
 	</dependencies>
-
-    <profiles>
-        <profile>
-            <id>buildDocker</id>
-                <build>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.spotify</groupId>
-                            <artifactId>docker-maven-plugin</artifactId>
-                            <version>${docker.plugin.version}</version>
-                        </plugin>
-                    </plugins>
-                </build>
-        </profile>
-    </profiles>
+    <build>
+        <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+            <excludeDevtools>false</excludeDevtools>
+            </configuration>
+            <executions>
+            <execution>
+                <goals>
+                <goal>build-info</goal>
+                </goals>
+                <configuration>
+                <additionalProperties>
+                    <spring.boot.version>${project.parent.version}</spring.boot.version>
+                    <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                    <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                    <java.source>${maven.compiler.source}</java.source>
+                    <java.target>${maven.compiler.target}</java.target>
+                </additionalProperties>
+                </configuration>
+            </execution>
+            </executions>
+        </plugin>
+        </plugins>
+    </build>
 </project>
