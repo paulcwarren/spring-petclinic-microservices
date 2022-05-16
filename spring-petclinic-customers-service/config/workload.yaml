@@ -1,7 +1,7 @@
 apiVersion: carto.run/v1alpha1
 kind: Workload
 metadata:
-  name: spring-petclinic-visits-service
+  name: spring-petclinic-customers-service
   labels:
     apps.tanzu.vmware.com/workload-type: web
     app.kubernetes.io/part-of: petclinic
@@ -13,7 +13,7 @@ spec:
   build:
     env:
     - name: BP_MAVEN_BUILT_MODULE
-      value: spring-petclinic-visits-service
+      value: spring-petclinic-customers-service
   source:
     git:
       url: https://github.com/tanzu-end-to-end/spring-petclinic-microservices
